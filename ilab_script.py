@@ -12,24 +12,40 @@ def execute_query(query):
     """Execute SQL query and return results as formatted table"""
 
     # Database connection parameters
-    # TODO: Replace these with YOUR database credentials from Project 1
+    import os
+    import getpass
+
     DB_HOST = "postgres.cs.rutgers.edu"
-    DB_NAME = "aas517"  # CHANGE THIS - usually something like aas517
-    DB_USER = "aas517"        # CHANGE THIS - usually your netid
-    DB_PASSWORD = "Redbud$2025"    # CHANGE THIS - your database password
+    DB_NAME = os.environ.get('DB_NAME', 'aas517')
+    # Use current system user if not specified
+    DB_USER = os.environ.get('DB_USER', getpass.getuser())
+    DB_PASSWORD = os.environ.get('DB_PASSWORD', '')
 
     try:
         # Connect to database
-        print(f"Connecting to database {DB_NAME}...", file=sys.stderr)
-        conn = psycopg2.connect(
-            host=DB_HOST,
-            database=DB_NAME,
-            user=DB_USER,
-            password=DB_PASSWORD
-        )
+        print(f"Connecting to database {DB_NAME} as {DB_USER}...", file=sys.stderr)
+
+        # Try GSSAPI first (passwordless), then fall back to password if provided
+        if DB_PASSWORD:
+            conn = psycopg2.connect(
+                host=DB_HOST,
+                database=DB_NAME,
+                user=DB_USER,
+                password=DB_PASSWORD
+            )
+        else:
+            # GSSAPI authentication (no password needed on ilab)
+            conn = psycopg2.connect(
+                host=DB_HOST,
+                database=DB_NAME,
+                user=DB_USER
+            )
 
         # Create cursor
         cur = conn.cursor()
+
+        # Set search path to include your schema
+        cur.execute("SET search_path TO aas517, public;")
 
         # Execute query
         print(f"Executing query...", file=sys.stderr)
