@@ -9,7 +9,7 @@
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/database_llm_project.git
+git clone https://github.com/abhisheksan/database_llm_project.git
 cd database_llm_project
 ```
 

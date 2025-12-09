@@ -27,9 +27,24 @@ def generate_sql(llm, schema, question):
 Database Schema:
 {schema}
 
+IMPORTANT NOTES:
+- The application table has numeric codes (e.g., owner_occupancy is a SMALLINT code)
+- To get human-readable names, JOIN with the lookup tables (e.g., owner_occupancy table has owner_occupancy_name)
+- Do NOT use placeholders like ? or parameters - write complete SQL queries with actual values
+- loan_amount_000s and applicant_income_000s are already in thousands of dollars - do NOT multiply them
+- For "owner occupied", join with owner_occupancy table and check owner_occupancy_name
+
+Example for owner occupied query:
+SELECT AVG(applicant_income_000s) FROM application a
+JOIN owner_occupancy o ON a.owner_occupancy = o.owner_occupancy
+WHERE o.owner_occupancy_name LIKE '%Owner-occupied%'
+
+Example for loan vs income comparison:
+SELECT COUNT(*) FROM application WHERE loan_amount_000s > applicant_income_000s
+
 User Question: {question}
 
-Write ONLY the SQL query, nothing else. Start with SELECT.
+Write ONLY the SQL query, nothing else. Start with SELECT and do not end with semicolon.
 
 SQL:"""
 
