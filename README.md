@@ -3,12 +3,17 @@
 Natural language interface for querying mortgage loan database using a local LLM.
 
 ## Team Members
-- **aas517**: Database setup on ilab, ilab_script.py development, schema creation, database access management
-- **mjm857**: Local LLM setup, prompt engineering, SSH tunnel integration, testing
+- **aas517**: Database setup on ilab, ilab_script.py development, schema creation, database access management, documentation
+- **mjm857**: Local LLM setup, prompt engineering, SSH tunnel integration, video demonstration
+- **ds2072**: Testing and query validation
+- **asj99**: Testing and error handling verification
+
 
 ## Contributions
-- **aas517**: Created and deployed ilab_script.py on ilab server, set up PostgreSQL database with mortgage data from Project 1, granted database access to team member, configured GSSAPI authentication, created schema.sql file for LLM
-- **mjm857**: Set up local LLM (Phi-3 mini), implemented database_llm.py with SSH tunnel using paramiko, developed prompt engineering with Phi-3 instruct format, tested and debugged SQL generation
+- **aas517**: Created and deployed ilab_script.py on ilab server, set up PostgreSQL database with mortgage data from Project 1, granted database access to team members, configured GSSAPI authentication, created schema.sql file for LLM, wrote README and setup documentation, compiled chat transcripts
+- **mjm857**: Set up local LLM (Phi-3 mini), implemented database_llm.py with SSH tunnel using paramiko, developed prompt engineering with Phi-3 instruct format, tested and debugged SQL generation, recorded video demonstration of working queries
+- **ds2072**: Assisted with testing the complete system against the three required test queries (loan > income, owner occupied average, denial reasons), helped validate SQL query correctness, provided feedback on prompt improvements
+- **asj99**: Helped test error handling for malformed queries and connection failures, verified the authentication flow works correctly, assisted with troubleshooting GSSAPI connection issues during development
 
 ## What We Found Challenging
 - Getting the LLM to generate valid SQL queries without extra explanatory text

@@ -3,9 +3,9 @@
 ## For Person 1 (aas517) - Already Done ✓
 - ilab_script.py on ilab
 - Database with mortgage data
-- Granted access to mjm857
+- Granted access to all team members (mjm857, ds2072, asj99)
 
-## For Person 2 (mjm857) - Local Setup
+## For All Team Members - Local Setup
 
 ### 1. Clone the repository
 ```bash
@@ -32,7 +32,7 @@ python3 database_llm.py
 ```
 
 When prompted:
-- **Username**: Your ilab username (e.g., mjm857)
+- **Username**: Your ilab username (e.g., mjm857, ds2072, asj99)
 - **Password**: Your ilab password
 
 The program will:
