@@ -41,7 +41,7 @@ def generate_sql(llm, schema, question):
     # Take only first 80 lines to keep it small
     schema_summary = '\n'.join(tables_info[:80])
 
-    # Use Phi-3 instruct format
+    # Use Phi-3 instruct format with example
     prompt = f"""<|system|>
 You are a SQL expert. Convert questions to PostgreSQL SELECT queries.
 
@@ -58,11 +58,22 @@ Key relationships:
 - application.state_code joins to state.state_code (both SMALLINT)
 - application.county_code joins to county.county_code (both INTEGER)
 
-Important notes:
+Important rules:
 - loan_amount_000s and applicant_income_000s are in thousands (e.g., 200 = $200,000)
-- Lookup tables have _name columns for readable names
-- JOIN on code columns (SMALLINT/INTEGER), not name columns (TEXT)
-- Only JOIN if you need readable names, otherwise just use application table<|end|>
+- Lookup tables: code columns are SMALLINT/INTEGER, _name columns are TEXT
+- NEVER use subqueries
+- To compare columns in same table: use simple WHERE, no JOIN
+- To filter by _name: JOIN lookup table on code, then WHERE on _name
+
+Examples:
+Q: loan greater than income count
+A: SELECT COUNT(*) FROM application WHERE loan_amount_000s>applicant_income_000s
+
+Q: average income owner occupied
+A: SELECT AVG(a.applicant_income_000s) FROM application a JOIN owner_occupancy o ON a.owner_occupancy=o.owner_occupancy WHERE o.owner_occupancy_name LIKE '%Owner%'
+
+Q: most common denial reason
+A: SELECT d.denial_reason_name,COUNT(*) FROM application a JOIN denial_reason d ON a.denial_reason_1=d.denial_reason_code GROUP BY d.denial_reason_name ORDER BY COUNT(*) DESC LIMIT 1<|end|>
 <|user|>
 {question}<|end|>
 <|assistant|>
