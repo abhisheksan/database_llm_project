@@ -1,6 +1,6 @@
 # Natural Language Database Query System
 
-A sophisticated natural language interface for querying PostgreSQL databases using local LLM technology. This project demonstrates advanced prompt engineering, secure remote database access, and practical application of small language models for SQL generation.
+A natural language interface for querying PostgreSQL databases using local LLM technology. This project demonstrates advanced prompt engineering, secure remote database access, and practical application of small language models for SQL generation.
 
 ## Overview
 
